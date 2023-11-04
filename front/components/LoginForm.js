@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const LoginForm = ({setIsLoggedIn}) => {
     const [id, setId] = useState('');
@@ -43,5 +44,9 @@ const LoginForm = ({setIsLoggedIn}) => {
         </FormWrapper>
     );
 };
+
+LoginForm.prototype = {
+    setIsLoggedIn: PropTypes.func.isRequired,
+}
 
 export default LoginForm;
