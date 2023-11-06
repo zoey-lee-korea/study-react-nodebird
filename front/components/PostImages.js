@@ -18,6 +18,7 @@ const PostImages = ({ images }) => {
       return (
         <>
           <img role="presentation" src={images[0].src} alt={images[0].src} onClick={onZoom} />
+        {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
         </>
       );
     }
@@ -30,6 +31,7 @@ const PostImages = ({ images }) => {
               <img role="presentation" style={{ width: '50%', display: 'inline-block'}} src={images[0].src} alt={images[0].src}  onClick={onZoom} />
               <img role="presentation" style={{ width: '50%', display: 'inline-block'}} src={images[1].src} alt={images[1].src} onClick={onZoom} />
             </div>
+            {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
           </>
         );
       }
@@ -50,6 +52,7 @@ const PostImages = ({ images }) => {
               개의 사진 더보기
             </div>
           </div>
+        {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
         </>
     )
 };
