@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 import PostImages from './PostImages';
+import CommentForm from './CommentForm';
 
 const PostCard = ( {post} ) => {
   const id = useSelector((state) => state.user.me && state.user.me.id);
@@ -54,8 +55,24 @@ const PostCard = ( {post} ) => {
         />
       </Card>
       {commentFormOpened && (
-        <div>댓글</div>
-        )}
+        <>
+          <CommentForm post={post} />
+          <List
+            header={`${post.Comments.length}개의 댓글`} // antd 공식문서에서 참고하여 옵션 사용
+            itemLayout="horizontal"
+            dataSource={post.Comments}
+            renderItem={(item) => (
+              <li>
+                <Comment
+                  author={item.User.nickname}
+                  avatar={(<Avatar>{item.User.nickname[0]}</Avatar>)}
+                  content={item.content}
+                />
+              </li>
+            )}
+          />
+        </>
+      )}
     </>
   );
 };
