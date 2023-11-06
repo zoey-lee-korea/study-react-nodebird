@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { loginAction } from '../reducers/user';
 
-const LoginForm = ({setIsLoggedIn}) => {
+const LoginForm = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const onChangeId = useCallback((e) => {
