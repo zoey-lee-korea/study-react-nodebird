@@ -3,6 +3,9 @@ import { Button, Form, Input } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+
+import { loginAction } from '../reducers/user';
 
 const LoginForm = ({setIsLoggedIn}) => {
     const [id, setId] = useState('');
@@ -13,9 +16,13 @@ const LoginForm = ({setIsLoggedIn}) => {
     const onChangePassword = useCallback((e) => {
         setPassword(e.target.value);
     },[]);
+
+    const dispatch = useDispatch();
     const onSubmitForm = useCallback(() => {
-        console.log(id, password);
-        setIsLoggedIn(true);
+        dispatch(loginAction({
+            id,
+            password,
+        }));
     }, [id, password]);
 
     const FormWrapper = styled(Form)`
