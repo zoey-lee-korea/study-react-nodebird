@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction } from '../reducers/user';
 
 const LoginForm = () => {
-    const [id, setId] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const onChangeId = useCallback((e) => {
-        setId(e.target.value);
+    const onChangeEmail = useCallback((e) => {
+        setEmail(e.target.value);
     },[]);
     const onChangePassword = useCallback((e) => {
         setPassword(e.target.value);
@@ -21,10 +21,10 @@ const LoginForm = () => {
     const onSubmitForm = useCallback(() => {
         dispatch(
             loginRequestAction({
-                id,
+                email,
                 password,
         }));
-    }, [id, password]);
+    }, [email, password]);
 
     const FormWrapper = styled(Form)`
         padding: 10px;
@@ -35,8 +35,8 @@ const LoginForm = () => {
     return (
         <FormWrapper onFinish={onSubmitForm}>
             <div>
-                <label htmlFor='user-id'>아이디</label>
-                <Input name='user-id' value={id} onChange={onChangeId} required />
+                <label htmlFor='user-email'>이메일</label>
+                <Input name='user-email' value={email} onChange={onChangeEmail} required />
             </div>
             <div>
                 <label htmlFor='user-password'>비밀번호</label>
