@@ -8,7 +8,7 @@ const PostForm = () => {
     const dispatch = useDispatch();
     const imageInput = useRef();
     const [text, setText] = useState('');
-    const { imagePaths } = useSelector(state => state.post);
+    const { imagePaths, addPostDone } = useSelector(state => state.post);
     
     const onChangeText = useCallback((e) => {
         setText(e.target.value);
@@ -19,11 +19,16 @@ const PostForm = () => {
         imageInput.current.click(); // 현재 imageInput에 접근 가능
       }, [imageInput.current]);
 
-      
+    
     const onSubmit = useCallback(() => {
-        dispatch(addPost);
-        setText('');
-    }, []);
+        dispatch(addPost(text));
+    }, [text]);
+
+    useEffect(() => {
+        if (addPostDone) {
+            setText('');
+        }
+    }, [addPostDone]);
 
     return (
         <Form style={{ margin: '10px 0 20px' }} encType="multipart/form-data" onFinish={onSubmit}>
