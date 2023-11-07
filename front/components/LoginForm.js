@@ -30,7 +30,7 @@ const LoginForm = () => {
         padding: 10px;
     `
     
-    const { isLoggingIn } = useSelector((state) => state.user);
+    const { logInLoading } = useSelector((state) => state.user);
 
     return (
         <FormWrapper onFinish={onSubmitForm}>
@@ -48,7 +48,7 @@ const LoginForm = () => {
                     required />
             </div>
             <div>
-                <Button type='primary' htmlType='submit' loading={isLoggingIn}>로그인</Button>
+                <Button type='primary' htmlType='submit' loading={logInLoading}>로그인</Button>
                 <Link href='/signup'><a><Button>회원가입</Button></a></Link>
             </div>
         </FormWrapper>
@@ -56,7 +56,7 @@ const LoginForm = () => {
 };
 
 LoginForm.prototype = {
-    setIsLoggedIn: PropTypes.func.isRequired,
+    setlogInDone: PropTypes.func.isRequired,
 }
 
 export default LoginForm;

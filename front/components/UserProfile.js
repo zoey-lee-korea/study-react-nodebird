@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logoutRequestAction } from '../reducers/user';
 
 const UserProfile = () => {
-    const { user, isLoggingOut } = useSelector(state => state.user);
+    const { user, logOutLoading } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const onLogOut = useCallback(() => {
         dispatch(logoutRequestAction);
@@ -25,7 +25,7 @@ const UserProfile = () => {
                     title={user.nickname}
                 />
 
-                <Button onClick={onLogOut} loading={isLoggingOut}>로그아웃</Button> 
+                <Button onClick={onLogOut} loading={logOutLoading}>로그아웃</Button> 
             </Card> 
         </div>
     );
