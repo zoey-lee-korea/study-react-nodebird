@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 import PostImages from './PostImages';
+import PostCardContent from './PostCardContent';
 import CommentForm from './CommentForm';
 
 const PostCard = ( {post} ) => {
@@ -52,6 +53,7 @@ const PostCard = ( {post} ) => {
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
           title={post.User.nickname}
+          description={<PostCardContent postData={post.content} />}
         />
       </Card>
       {commentFormOpened && (

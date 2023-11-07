@@ -18,7 +18,7 @@ export const initialState = { // index.js에서 합쳐서 사용할거라서 exp
       id: 1,
       nickname: 'zoey',
     },
-    content: '첫 번째 게시글',
+    content: '첫 번째 게시글 #해시태그',
     Images: [{
       src: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
     }, {
