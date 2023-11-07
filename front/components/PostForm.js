@@ -2,19 +2,15 @@ import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
+import useInput from '../hooks/useInput';
 import { addPost } from '../reducers/post';
 
 const PostForm = () => {
     const dispatch = useDispatch();
-    const imageInput = useRef();
-    const [text, setText] = useState('');
+    const [text, onChangeText, setText] = useInput('');
     const { imagePaths, addPostDone } = useSelector(state => state.post);
-    
-    const onChangeText = useCallback((e) => {
-        setText(e.target.value);
-    }, []);
 
-
+    const imageInput = useRef();
     const onClickImageUpload = useCallback(() => {
         imageInput.current.click(); // 현재 imageInput에 접근 가능
       }, [imageInput.current]);

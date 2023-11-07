@@ -4,8 +4,8 @@ const dummyUser = (data) => ({
   id: 1,
   nickname: 'zoey',
   Posts: [],
-  Followings: [],
-  Followers: [],
+  Followings: [{ nickname: 'following1' }, { nickname: 'following2' }, { nickname: 'following3' }],
+  Followers: [{ nickname: 'follower1' }, { nickname: 'follower2' }, { nickname: 'follower3' }],
 });
 
 // INITIAL STATE
