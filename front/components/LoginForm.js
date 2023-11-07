@@ -5,17 +5,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
+import useInput from '../hooks/useInput';
 import { loginRequestAction } from '../reducers/user';
 
 const LoginForm = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const onChangeEmail = useCallback((e) => {
-        setEmail(e.target.value);
-    },[]);
-    const onChangePassword = useCallback((e) => {
-        setPassword(e.target.value);
-    },[]);
+    const [email, onChangeEmail] = useInput('');
+    const [password, onChangePassword] = useInput('');
 
     const dispatch = useDispatch();
     const onSubmitForm = useCallback(() => {
