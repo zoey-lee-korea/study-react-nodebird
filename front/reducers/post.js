@@ -13,6 +13,16 @@ const dummyPost = (data) => ({
   Comments: [],
 });
 
+const dummyComment = (data) => ({
+  id: shortId.generate(),
+  content: data,
+  User: {
+    id: 1,
+    nickname: 'zoey',
+  },
+
+});
+
 // INITIAL STATE
 export const initialState = { // index.js에서 합쳐서 사용할거라서 export
   mainPosts: [{
@@ -113,8 +123,16 @@ const reducer = (state = initialState, action) => {
       };
     }
     case ADD_COMMENT_SUCCESS: {
+      console.log(state.mainPosts)
+      const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+      const post = state.mainPosts[postIndex];
+      post.Comments = [dummyComment(action.data.content), ...post.Comments];
+      const mainPosts = [...state.mainPosts];
+      mainPosts[postIndex] = post;
+
       return {
         ...state,
+        mainPosts,
         addCommentLoading: false,
         addCommentDone: true,
       };
