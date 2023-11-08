@@ -10,15 +10,18 @@ const dummyUser = (data) => ({
 
 // INITIAL STATE
 export const initialState = { // index.js에서 합쳐서 사용할거라서 export
-  logInLoading : false, // 로그인 시도중 - 이런게 true인 경우 Loading창을 띄우기 위함
+  logInLoading: false, // 로그인 시도중 - 이런게 true인 경우 Loading창을 띄우기 위함
   logInDone: false,
   logInError: null,
-  logOutLoading : false, // 로그아웃 시도중
+  logOutLoading: false, // 로그아웃 시도중
   logOutDone: false,
   logOutError: null,
   signUpLoading: false, // 회원가입 시도중
   signUpDone: false,
   signUpError: null,
+  changeNicknameLoading: false, // 닉네임 변경 시도중
+  changeNicknameDone: false,
+  changeNicknameError: null,
   user: null,
   signUpData: {},
   loginData: {},
@@ -70,17 +73,17 @@ const reducer = (state = initialState, action) => {
       console.log('reducer logIn');
       return {
         ...state,
-        logInLoading : true,
-        logInError : null,
-        logInDone : false,
+        logInLoading: true,
+        logInError: null,
+        logInDone: false,
       };
     }
     case LOG_IN_SUCCESS: {
       return {
         ...state,
-        logInLoading : false,
+        logInLoading: false,
         logInDone: true,
-        user : dummyUser(action.user)
+        user: dummyUser(action.user)
         // user: { ...dummyUser, nickname: 'zoey'},
         // loginData: { ...action.data, nickname: 'zoey'},
       };
@@ -88,22 +91,22 @@ const reducer = (state = initialState, action) => {
     case LOG_IN_FAILURE: {
       return {
         ...state,
-        logInLoading : false,
+        logInLoading: false,
         logInError: action.error,
       };
     }
     case LOG_OUT_REQUEST: {
       return {
         ...state,
-        logOutLoading : true,
-        logOutDone : false,
-        logOutError : null,
+        logOutLoading: true,
+        logOutDone: false,
+        logOutError: null,
       };
     }
     case LOG_OUT_SUCCESS: {
       return {
         ...state,
-        logOutLoading : false,
+        logOutLoading: false,
         logOutDone: true,
         user: null,
       };
@@ -111,30 +114,52 @@ const reducer = (state = initialState, action) => {
     case LOG_OUT_FAILURE: {
       return {
         ...state,
-        logInLoading : false,
-        logOutError : action.error,
+        logInLoading: false,
+        logOutError: action.error,
       };
     }
     case SIGN_UP_REQUEST: {
       return {
         ...state,
-        signUpLoading : true,
-        signUpDone : false,
-        signUpError : null,
+        signUpLoading: true,
+        signUpDone: false,
+        signUpError: null,
       };
     }
     case SIGN_UP_SUCCESS: {
       return {
         ...state,
-        signUpLoading : false,
+        signUpLoading: false,
         signUpDone: true,
       };
     }
     case SIGN_UP_FAILURE: {
       return {
         ...state,
-        signUpLoading : false,
-        signUpError : action.error,
+        signUpLoading: false,
+        signUpError: action.error,
+      };
+    }
+    case CHANGE_NICKNAME_REQUEST: {
+      return {
+        ...state,
+        changeNicknameLoading: true,
+        changeNicknameDone: false,
+        changeNicknameError: null,
+      };
+    }
+    case CHANGE_NICKNAME_SUCCESS: {
+      return {
+        ...state,
+        changeNicknameLoading: false,
+        changeNicknameDone: true,
+      };
+    }
+    case CHANGE_NICKNAME_FAILURE: {
+      return {
+        ...state,
+        changeNicknameLoading: false,
+        changeNicknameError: action.error,
       };
     }
     default: {
