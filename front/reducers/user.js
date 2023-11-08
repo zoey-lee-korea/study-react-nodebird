@@ -3,7 +3,7 @@ const dummyUser = (data) => ({
   ...data,
   id: 1,
   nickname: 'zoey',
-  Posts: [],
+  Posts: [{ id: 1 }],
   Followings: [{ nickname: 'following1' }, { nickname: 'following2' }, { nickname: 'following3' }],
   Followers: [{ nickname: 'follower1' }, { nickname: 'follower2' }, { nickname: 'follower3' }],
 });
@@ -161,6 +161,15 @@ const reducer = (state = initialState, action) => {
         changeNicknameLoading: false,
         changeNicknameError: action.error,
       };
+    }
+    case ADD_POST_TO_ME: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          Posts: [{ id: action.data }, ...state.user.Posts],
+        }
+      }
     }
     default: {
       return {

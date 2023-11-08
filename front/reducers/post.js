@@ -3,8 +3,8 @@ import faker from 'faker';
 
 // DUMMY(post)
 const dummyPost = (data) => ({
-  id: shortId.generate(),
-  content: data,
+  id: data.id,
+  content: data.content,
   User: {
     id: 1,
     nickname: 'zoey',
@@ -33,18 +33,23 @@ export const initialState = { // index.js에서 합쳐서 사용할거라서 exp
     },
     content: '첫 번째 게시글 #해시태그',
     Images: [{
+      id: shortId.generate(),
       src: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
     }, {
+      id: shortId.generate(),
       src: 'https://gimg.gilbut.co.kr/book/BN001958/rn_view_BN001958.jpg',
     }, {
+      id: shortId.generate(),
       src: 'https://gimg.gilbut.co.kr/book/BN001998/rn_view_BN001998.jpg',
     }],
     Comments: [{
+      id: shortId.generate(),
       User: {
         nickname: 'nero',
       },
       content: '우와 안녕하세요~',
     }, {
+      id: shortId.generate(),
       User: {
         nickname: 'hero',
       },
