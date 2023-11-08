@@ -171,6 +171,15 @@ const reducer = (state = initialState, action) => {
         }
       }
     }
+    case REMOVE_POST_OF_ME: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          Posts: state.user.Posts.filter((v) => v.id !== action.data),
+        }
+      }
+    }
     default: {
       return {
         ...state,

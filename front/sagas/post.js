@@ -48,6 +48,31 @@ function* addPost(action) {
   }
 }
 
+function removePostAPI(data) {
+  return axios.delete('/api/post', data);
+}
+
+function* removePost(action) {
+  try {
+    // const result = yield call(removePostAPI, action.data);
+    yield delay(1000);
+    yield put({
+      type: REMOVE_POST_SUCCESS,
+      data: action.data,
+    });
+    yield put({
+      type: REMOVE_POST_OF_ME,
+      data: action.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: REMOVE_POST_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
+
 function addCommentAPI(data) {
   return axios.post(`/api/post/${data.postId}/comment`, data);
 }
@@ -68,8 +93,13 @@ function* addComment(action) {
     });
   }
 }
+
 function* watchAddPost() {
   yield takeLatest(ADD_POST_REQUEST, addPost);
+}
+
+function* watchRemovePost() {
+  yield takeLatest(REMOVE_POST_REQUEST, removePost);
 }
 
 function* watchAddComment() {
@@ -79,6 +109,7 @@ function* watchAddComment() {
 export default function* postSaga() {
   yield all([
     fork(watchAddPost),
+    fork(watchRemovePost),
     fork(watchAddComment),
   ]);
 }

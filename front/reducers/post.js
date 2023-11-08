@@ -63,6 +63,9 @@ export const initialState = { // index.js에서 합쳐서 사용할거라서 exp
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: null,
+  removePostLoading: false,
+  removePostDone: false,
+  removePostError: null,
 };
 
 // ACTION_NAME
@@ -147,6 +150,29 @@ const reducer = (state = initialState, action) => {
         ...state,
         addCommentLoading: false,
         addCommentError: action.error,
+      };
+    }
+    case REMOVE_POST_REQUEST: {
+      return {
+        ...state,
+        removePostLoading: true,
+        removePostDone: false,
+        removePostError: null,
+      };
+    }
+    case REMOVE_POST_SUCCESS: {
+      return {
+        ...state,
+        mainPosts: state.mainPosts.filter((v) => v.id !== action.data),
+        removePostLoading: false,
+        removePostDone: true,
+      };
+    }
+    case REMOVE_POST_FAILURE: {
+      return {
+        ...state,
+        removePostLoading: false,
+        removePostError: action.error,
       };
     }
     default: {
