@@ -17,15 +17,14 @@ import {
     UNFOLLOW_FAILURE,
     UNFOLLOW_REQUEST,
     UNFOLLOW_SUCCESS,
-  } from '../reducers/user';
+} from '../reducers/user';
 
 function logInAPI(data) {
     return axios.post('/api/login', data);
 }
-  
+
 function* logIn(action) {
     try {
-        console.log('saga logIn');
         // const result = yield call(logInAPI);
         yield delay(1000); // 백엔드 구현전 임시적용
         yield put({
@@ -40,11 +39,11 @@ function* logIn(action) {
         });
     }
 }
-  
+
 function logOutAPI() {
     return axios.post('/api/logout');
 }
-  
+
 function* logOut() {
     try {
         // const result = yield call(logOutAPI);
@@ -64,7 +63,7 @@ function* logOut() {
 function signUpAPI() {
     return axios.post('/api/signup');
 }
-  
+
 function* signUp() {
     try {
         // const result = yield call(signUpAPI);
@@ -80,7 +79,7 @@ function* signUp() {
         });
     }
 }
-  
+
 function* watchLogIn() {
     yield takeLatest(LOG_IN_REQUEST, logIn);
 }
