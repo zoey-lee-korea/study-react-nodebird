@@ -21,23 +21,24 @@ import {
 } from '../reducers/post';
 
 function addPostAPI(data) {
-    return axios.post('/api/post', data);
+  return axios.post('/api/post', data);
 }
-  
+
 function* addPost(action) {
-    try {
-      // const result = yield call(addPostAPI, action.data);
-      yield delay(1000);
-      yield put({
-        type: ADD_POST_SUCCESS,
-      });
-    } catch (err) {
-      console.error(err);
-      yield put({
-        type: ADD_POST_FAILURE,
-        data: err.response.data,
-      });
-    }
+  try {
+    // const result = yield call(addPostAPI, action.data);
+    yield delay(1000);
+    yield put({
+      type: ADD_POST_SUCCESS,
+      data: action.data
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: ADD_POST_FAILURE,
+      data: err.response.data,
+    });
+  }
 }
 
 function addCommentAPI(data) {
@@ -50,6 +51,7 @@ function* addComment(action) {
     yield delay(1000);
     yield put({
       type: ADD_COMMENT_SUCCESS,
+      data: action.data,
     });
   } catch (err) {
     console.error(err);
@@ -60,7 +62,7 @@ function* addComment(action) {
   }
 }
 function* watchAddPost() {
-    yield takeLatest(ADD_POST_REQUEST, addPost);
+  yield takeLatest(ADD_POST_REQUEST, addPost);
 }
 
 function* watchAddComment() {
@@ -68,8 +70,8 @@ function* watchAddComment() {
 }
 
 export default function* postSaga() {
-    yield all([
-      fork(watchAddPost),
-      fork(watchAddComment),
-    ]);
+  yield all([
+    fork(watchAddPost),
+    fork(watchAddComment),
+  ]);
 }

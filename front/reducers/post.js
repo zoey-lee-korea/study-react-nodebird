@@ -1,14 +1,17 @@
+import shortId from 'shortid';
+import faker from 'faker';
+
 // DUMMY(post)
-const dummyPost = {
-    id: 2,
-    content: '두 번째 게시글 더미데이터입니다.',
-    User: {
-      id: 1,
-      nickname: 'zoey',
-    },
-    Images: [],
-    Comments: [],
-  };
+const dummyPost = (data) => ({
+  id: shortId.generate(),
+  content: data,
+  User: {
+    id: 1,
+    nickname: 'zoey',
+  },
+  Images: [],
+  Comments: [],
+});
 
 // INITIAL STATE
 export const initialState = { // index.js에서 합쳐서 사용할거라서 export
@@ -42,6 +45,9 @@ export const initialState = { // index.js에서 합쳐서 사용할거라서 exp
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
+  addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: null,
 };
 
 // ACTION_NAME
@@ -74,58 +80,58 @@ export const addComment = (data) => ({
 
 // REDUCER
 const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      case ADD_POST_REQUEST: {
-        return {
-          ...state,
-          addPostLoading : true,
-          addPostDone : false,
-          addPostError : null,
-        }
-      }
-      case ADD_POST_SUCCESS: {
-        return {
-          ...state,
-          mainPosts: [dummyPost, ...state.mainPosts],
-          addPostLoading: false,
-          addPostDone : true,
-        };
-      }
-      case ADD_POST_FAILURE: {
-        return {
-          ...state,
-          addPostLoading: false,
-          addPostError : action.error,
-        };
-      }
-      case ADD_COMMENT_REQUEST: {
-        return {
-          ...state,
-          addCommentLoading : true,
-          addCommentDone : false,
-          addCommentError : null,
-        }
-      }
-      case ADD_COMMENT_SUCCESS: {
-        return {
-          ...state,
-          addCommentLoading: false,
-          addCommentDone : true,
-        };
-      }
-      case ADD_COMMENT_FAILURE: {
-        return {
-          ...state,
-          addCommentLoading: false,
-          addCommentError : action.error,
-        };
-      }
-      default: {
-          return {
-          ...state,
-          };
-      }
+  switch (action.type) {
+    case ADD_POST_REQUEST: {
+      return {
+        ...state,
+        addPostLoading: true,
+        addPostDone: false,
+        addPostError: null,
+      };
     }
+    case ADD_POST_SUCCESS: {
+      return {
+        ...state,
+        mainPosts: [dummyPost(action.data), ...state.mainPosts],
+        addPostLoading: false,
+        addPostDone: true,
+      };
+    }
+    case ADD_POST_FAILURE: {
+      return {
+        ...state,
+        addPostLoading: false,
+        addPostError: action.error,
+      };
+    }
+    case ADD_COMMENT_REQUEST: {
+      return {
+        ...state,
+        addCommentLoading: true,
+        addCommentDone: false,
+        addCommentError: null,
+      };
+    }
+    case ADD_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        addCommentLoading: false,
+        addCommentDone: true,
+      };
+    }
+    case ADD_COMMENT_FAILURE: {
+      return {
+        ...state,
+        addCommentLoading: false,
+        addCommentError: action.error,
+      };
+    }
+    default: {
+      return {
+        ...state,
+      };
+    }
+  }
 };
 
 export default reducer
