@@ -68,6 +68,26 @@ export const initialState = { // index.js에서 합쳐서 사용할거라서 exp
   removePostDone: false,
   removePostError: null,
 };
+initialState.mainPosts = initialState.mainPosts.concat(
+  Array(20).fill().map(() => ({
+    id: shortId.generate(),
+    User: {
+      id: shortId.generate(),
+      nickname: faker.name.findName(),
+    },
+    content: faker.lorem.paragraph(),
+    Images: [{
+      src: faker.image.image(),
+    }],
+    Comments: [{
+      User: {
+        id: shortId.generate(),
+        nickname: faker.name.findName(),
+      },
+      content: faker.lorem.sentence(),
+    }],
+  }))
+);
 
 // ACTION_NAME
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
