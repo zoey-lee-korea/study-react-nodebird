@@ -120,7 +120,7 @@ function* watchAddPost() {
 }
 
 function* watchLoadPosts() {
-  yield throttle(5000, LOAD_POSTS_REQUEST, loadPosts);
+  yield throttle(5000, LOAD_POSTS_REQUEST, loadPosts); // 게시글 읽어오는 5초 동안은 다른 요청은 무시하겠다
 }
 
 function* watchRemovePost() {
