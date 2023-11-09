@@ -58,6 +58,7 @@ export const initialState = { // index.js에서 합쳐서 사용할거라서 exp
     }]
   }],
   imagePaths: [],
+  hasMorePosts: true,
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
@@ -67,9 +68,13 @@ export const initialState = { // index.js에서 합쳐서 사용할거라서 exp
   removePostLoading: false,
   removePostDone: false,
   removePostError: null,
+  loadPostsLoading: false,
+  loadPostsDone: false,
+  loadPostsError: null,
 };
-initialState.mainPosts = initialState.mainPosts.concat(
-  Array(20).fill().map(() => ({
+
+export const generateDummyPost = (number) =>
+  Array(number).fill().map(() => ({
     id: shortId.generate(),
     User: {
       id: shortId.generate(),
@@ -86,8 +91,7 @@ initialState.mainPosts = initialState.mainPosts.concat(
       },
       content: faker.lorem.sentence(),
     }],
-  }))
-);
+  }));
 
 // ACTION_NAME
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
@@ -175,6 +179,21 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
     case REMOVE_POST_FAILURE:
       draft.removePostLoading = false;
       draft.removePostError = action.error;
+      break;
+    case LOAD_POSTS_REQUEST:
+      draft.loadPostsLoading = true;
+      draft.loadPostsDone = false;
+      draft.loadPostsError = null;
+      break;
+    case LOAD_POSTS_SUCCESS:
+      draft.loadPostsLoading = false;
+      draft.loadPostsDone = true;
+      draft.mainPosts = action.data.concat(draft.mainPosts);
+      draft.hasMorePosts = draft.mainPosts.length < 50; // 게시글을 50개 까지만 보겠다
+      break;
+    case LOAD_POSTS_FAILURE:
+      draft.loadPostsLoading = false;
+      draft.loadPostsError = action.error;
       break;
     default:
       break;
