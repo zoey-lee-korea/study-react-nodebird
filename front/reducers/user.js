@@ -12,6 +12,12 @@ const dummyUser = (data) => ({
 
 // INITIAL STATE
 export const initialState = { // index.js에서 합쳐서 사용할거라서 export
+  followLoading: false, // 팔로우 시도중
+  followDone: false,
+  followError: null,
+  unfollowLoading: false, // 언팔로우 시도중
+  unfollowDone: false,
+  unfollowError: null,
   logInLoading: false, // 로그인 시도중 - 이런게 true인 경우 Loading창을 띄우기 위함
   logInDone: false,
   logInError: null,
@@ -71,6 +77,34 @@ export const logoutRequestAction = {
 // REDUCER
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case FOLLOW_REQUEST:
+      draft.followLoading = true;
+      draft.followError = null;
+      draft.followDone = false;
+      break;
+    case FOLLOW_SUCCESS:
+      draft.followLoading = false;
+      draft.user.Followings.push({ id: action.data });
+      draft.followDone = true;
+      break;
+    case FOLLOW_FAILURE:
+      draft.followLoading = false;
+      draft.followError = action.error;
+      break;
+    case UNFOLLOW_REQUEST:
+      draft.unfollowLoading = true;
+      draft.unfollowError = null;
+      draft.unfollowDone = false;
+      break;
+    case UNFOLLOW_SUCCESS:
+      draft.unfollowLoading = false;
+      draft.user.Followings = draft.user.Followings.filter((v) => v.id !== action.data);
+      draft.unfollowDone = true;
+      break;
+    case UNFOLLOW_FAILURE:
+      draft.unfollowLoading = false;
+      draft.unfollowError = action.error;
+      break;
     case LOG_IN_REQUEST:
       draft.logInLoading = true;
       draft.logInError = null;
