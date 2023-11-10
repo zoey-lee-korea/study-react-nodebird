@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -18,14 +18,20 @@ const LoginForm = () => {
             loginRequestAction({
                 email,
                 password,
-        }));
+            }));
     }, [email, password]);
 
     const FormWrapper = styled(Form)`
         padding: 10px;
     `
-    
-    const { logInLoading } = useSelector((state) => state.user);
+
+    const { logInLoading, logInError } = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if (logInError) {
+            alert(logInError);
+        }
+    }, [logInError]);
 
     return (
         <FormWrapper onFinish={onSubmitForm}>
@@ -35,11 +41,11 @@ const LoginForm = () => {
             </div>
             <div>
                 <label htmlFor='user-password'>비밀번호</label>
-                <Input 
-                    name='user-password' 
+                <Input
+                    name='user-password'
                     type='password'
-                    value={password} 
-                    onChange={onChangePassword} 
+                    value={password}
+                    onChange={onChangePassword}
                     required />
             </div>
             <div>
