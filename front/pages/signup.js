@@ -1,12 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Form, Input, Checkbox, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import Router from 'next/router';
 
 import AppLayout from '../components/AppLayout';
 import useInput from '../hooks/useInput';
-
+import { SIGN_UP_REQUEST } from '../reducers/user';
 
 const Signup = () => {
     const [email, onChangeEmail] = useInput('');
@@ -18,36 +19,48 @@ const Signup = () => {
     const onChangePasswordCheck = useCallback((e) => {
         setPasswordError(password !== e.target.value);
         setPasswordCheck(e.target.value);
-    },[password]);
+    }, [password]);
 
     const [term, setTerm] = useState('');
     const [termError, setTermError] = useState(false);
     const onChangeTerm = useCallback((e) => {
         setTermError(false);
         setTerm(e.target.checked);
-    },[]);
+    }, []);
 
     const dispatch = useDispatch();
-    const { signUpLoading } = useSelector((state) => state.user);
+    const { signUpLoading, signUpDone, signUpError } = useSelector((state) => state.user);
     const onSubmit = useCallback(() => {
         if (password !== passwordCheck) {
-          return setPasswordError(true);
+            return setPasswordError(true);
         }
         if (!term) {
-          return setTermError(true);
+            return setTermError(true);
         }
         dispatch({
             type: SIGN_UP_REQUEST,
-            data: {email, password, nickname}
+            data: { email, password, nickname }
         })
-      }, [password, passwordCheck, term]);
+    }, [password, passwordCheck, term]);
+
+    useEffect(() => {
+        if (signUpDone) {
+            Router.push('/');
+        }
+    }, [signUpDone]);
+
+    useEffect(() => {
+        if (signUpError) {
+            alert(signUpError);
+        }
+    }, [signUpError]);
 
     return (
         <AppLayout>
             <Head>
                 <title>회원가입 | NodeBird</title>
             </Head>
-            
+
             <Form onFinish={onSubmit} style={{ padding: 10 }}>
                 <div>
                     <label htmlFor="user-email">이메일</label>
