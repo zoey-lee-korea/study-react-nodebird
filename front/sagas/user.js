@@ -63,16 +63,15 @@ function* unfollow(action) {
 }
 
 function logInAPI(data) {
-    return axios.post('/api/login', data);
+    return axios.post('/user/login', data);
 }
 
 function* logIn(action) {
     try {
-        // const result = yield call(logInAPI);
-        yield delay(1000); // 백엔드 구현전 임시적용
+        const result = yield call(logInAPI, action.data);
         yield put({
             type: LOG_IN_SUCCESS,
-            data: action.data,
+            data: result.data,
         });
     } catch (err) {
         console.error(err);
