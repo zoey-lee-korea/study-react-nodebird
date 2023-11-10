@@ -13,6 +13,10 @@ db.sequelize.sync()
     })
     .catch(console.error);
 
+// 프론트에서 받은 데이터를 req.body에 넣어주는 역할 (Router보다 위쪽에 선언해줘야 한다)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get('/', (req, res) => {
     res.send('hello express');
 });
